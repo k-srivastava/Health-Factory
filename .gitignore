@@ -1,3 +1,5 @@
 /.venv
 
 /.env
+/static/database.db
+/static/test.db
