@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+
+:root {
+    --seashell: #EEE2DF;
+    --champagne-pink: #EED7C5;
+    --rosy-brown: #C89F9C;
+    --burnt-sienna: #C97C5D;
+    --redwood: #B36A5E;
+
+    --royal-blue: #0A2463;
+    --imperial-red: #FB3640;
+    --davys-gray: #605F5E;
+    --cerulean: #247BA0;
+    --platinum: #E2E2E2;
+
+    --navbar-text-color: #595758;
+    --text-color: #000000;
+    --href-color: #B36A5E;
+
+    --background-color: linear-gradient(120deg, var(--seashell), var(--champagne-pink));
+    --circle-before-color: linear-gradient(var(--redwood), var(--burnt-sienna));
+    --circle-after-color: linear-gradient(var(--burnt-sienna), var(--rosy-brown));
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: hidden;
+    height: 100vh;
+}
+
+section {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 100px;
+    background: var(--background-color);
+}
+
+section::before, section::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+}
+
+section::before {
+    background: var(--circle-before-color);
+    clip-path: circle(30% at right 70%);
+}
+
+section::after {
+    background: var(--circle-after-color);
+    clip-path: circle(20% at 10% 10%);
+}

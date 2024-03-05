@@ -1,0 +1,43 @@
+{% extends "homepage/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="text-box">
+        <h2>Health<br><span>Factory</span></h2>
+        <p>Database systems project.</p>
+
+        <a href="/factory">View Project</a>
+    </div>
+
+    <div class="image-box">
+        <img src="{{ url_for('static', filename='images/flask.png') }}" class="current-image" alt="flask-png">
+    </div>
+
+    <ul class="thumbnail">
+        <li>
+            <img
+                src="{{ url_for('static', filename='images/python.png') }}" alt="python-png"
+                onclick="thumbnailPicker('python.png')"
+            >
+        </li>
+
+        <li>
+            <img
+                src="{{ url_for('static', filename='images/flask.png') }}" alt="flask-png"
+                onclick="thumbnailPicker('flask.png')"
+            >
+        </li>
+
+        <li>
+            <img
+                src="{{ url_for('static', filename='images/sqlite3.png') }}" alt="sqlite3-png"
+                onclick="thumbnailPicker('sqlite3.png')"
+            >
+        </li>
+    </ul>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/imagePicker.js') }}" defer></script>
+{% endblock %}
