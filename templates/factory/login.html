@@ -1,0 +1,33 @@
+{% extends "factory/base.html" %}
+
+{% block title %}Factory | Login{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/factory/login.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="center">
+        <h1>Login</h1>
+
+        <form method="post">
+            <div class="text-field">
+                <input type="text" name="email-address" id="email-address-text-field" required>
+                <label for="email-address-text-field">Email Address</label>
+            </div>
+
+            <div class="text-field">
+                <input type="password" name="password" id="password-text-field" required>
+                <label for="password-text-field">Password</label>
+            </div>
+
+            <input type="submit" value="Login">
+
+            <div class="links">
+                <a href="/">Go Back</a>
+                <br>
+                {{ login_message }}
+            </div>
+        </form>
+    </div>
+{% endblock %}
