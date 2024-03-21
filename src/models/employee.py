@@ -114,6 +114,30 @@ def get_by_id(connection: sqlite3.Connection, employee_id: int) -> Optional[Empl
     return _create_employee(employee_raw)
 
 
+def get_by_email_address(connection: sqlite3.Connection, employee_email_address: str) -> Optional[Employee]:
+    """
+    Get the employee by its unique email address.
+
+    @param connection: Connection to the database.
+    @type connection: sqlite3.Connection
+    @param employee_email_address: Employee email address.
+    @type employee_email_address: str
+
+    @return: Employee in the database, or NOne if the employee does not exist.
+    @rtype: Optional[Employee]
+    """
+    cursor = connection.cursor()
+    employee_raw = cursor.execute(
+        'SELECT * FROM employee WHERE email_address = ?', (employee_email_address,)
+    ).fetchone()
+    cursor.close()
+
+    if employee_raw is None:
+        return None
+
+    return _create_employee(employee_raw)
+
+
 def get_all(connection: sqlite3.Connection) -> set[Employee]:
     """
     Get all the employees in the database.
