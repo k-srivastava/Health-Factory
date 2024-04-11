@@ -43,8 +43,30 @@ def dashboard() -> flask.Response | str:
     if 'employee_id' not in flask.session:
         return flask.redirect(flask.url_for('factory.login'))
 
+    return flask.render_template('factory/dashboard.html')
+
+
+@factory.route('/profile')
+def profile() -> flask.Response | str:
+    if 'employee_id' not in flask.session:
+        return flask.redirect(flask.url_for('factory.login'))
+
     connection = sqlite3.connect(os.getenv('DATABASE_PATH'))
-    employee_name = employee.get_by_id(connection, flask.session.get('employee_id'))
+    employee_data = employee.get_by_id(connection, flask.session.get('employee_id'))
     connection.close()
 
-    return f'<h1>{employee_name}</h1>'
+    return flask.render_template('factory/profile.html', employee=employee_data)
+
+
+@factory.route('/profile/edit')
+def profile_edit() -> flask.Response | str:
+    if 'employee_id' not in flask.session:
+        return flask.redirect(flask.url_for('factory.login'))
+
+    connection = sqlite3.connect(os.getenv('factory.login'))
+    employee_data = employee.get_by_id(connection, flask.session.get('employee_id'))
+    connection.close()
+
+    if employee_data.is_administrator:
+        return flask.render_template('factory/profile-edit-admin.html')
+    return flask.render_template('factory/profile-edit-default.html', employee=employee_data)
