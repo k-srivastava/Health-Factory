@@ -1,0 +1,26 @@
+{% extends "factory/base.html" %}
+
+{% block title %}Factory | Profile{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/factory/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="employee-data">
+        <h1>{{ employee.designation[:2] if employee.designation != None else "Em" }}</h1>
+        <h2>{{ employee.full_name }}</h2>
+        <h3>{{ employee.id }}</h3>
+        <h4>{{ "+" if employee.is_administrator else "" }}</h4>
+
+        <p>{{ "Designation: " + employee.designation if employee.designation != None else "" }}</p>
+        <p>Email: {{ employee.email_address }}</p>
+        <p>Phone: {{ employee.phone_number }}</p>
+        <p>Salary: {{ employee.monthly_salary }}</p>
+        <p>Age: {{ employee.age }}</p>
+    </div>
+
+    <div class="links">
+        <a href="/factory/profile/edit">Edit Profile</a>
+    </div>
+{% endblock %}
