@@ -8,6 +8,8 @@
     <title>{% block title %}{% endblock %}</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/factory/sidebar.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 
     {% block styles %}
     {% endblock %}
@@ -17,6 +19,38 @@
 </head>
 
 <body>
+<header>
+    <ul>
+        <li>
+            <a href="/factory/dashboard">
+                <span class="icon"><i class="fa fa-home" aria-hidden="true"></i></span>
+                <span class="title">Home</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/factory/profile">
+                <span class="icon"><i class="fa fa-user-circle" aria-hidden="true"></i></span>
+                <span class="title">Profile</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/factory/warehouse">
+                <span class="icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                <span class="title">Warehouse</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/factory/logout">
+                <span class="icon"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+                <span class="title">Logout</span>
+            </a>
+        </li>
+    </ul>
+</header>
+
 <section class="content">
     {% block content %}
     {% endblock %}
