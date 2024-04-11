@@ -1,7 +1,7 @@
 """Sale model and related functions to query the database."""
 import sqlite3
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Any
 
 
 @dataclass(frozen=True, slots=True)
@@ -83,3 +83,22 @@ def get_all(connection: sqlite3.Connection) -> set[Salt]:
         salts.add(_create_salt(salt))
 
     return salts
+
+
+def get_all_with_fields(connection: sqlite3.Connection, *fields: str) -> list[dict[str, Any]]:
+    data = []
+    column_names = ', '.join(fields)
+
+    cursor = connection.cursor()
+    salts_raw = cursor.execute(f'SELECT {column_names} FROM salt').fetchall()
+    cursor.close()
+
+    for salt in salts_raw:
+        dictionary = dict()
+
+        for idx, field in enumerate(fields):
+            dictionary[field] = salt[idx]
+
+        data.append(dictionary)
+
+    return data

@@ -1,0 +1,18 @@
+{% extends "factory/base.html" %}
+
+{% block title %}Warehouse | Manufacturer ({{ manufacturer.id }}){% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/factory/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="card-data">
+        <h1>{{ manufacturer.name[:2] }}</h1>
+        <h2>{{ manufacturer.name }}</h2>
+        <h3>{{ manufacturer.id }}</h3>
+
+        <p>Phone: {{ manufacturer.phone_number }}</p>
+        <p>Address: {{ manufacturer.address }}</p>
+    </div>
+{% endblock %}

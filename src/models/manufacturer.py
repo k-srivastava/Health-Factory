@@ -1,7 +1,7 @@
 """Manufacturer model and related functions to query the database."""
 import sqlite3
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Any
 
 
 @dataclass(frozen=True, slots=True)
@@ -90,3 +90,22 @@ def get_all(connection: sqlite3.Connection) -> set[Manufacturer]:
         manufacturers.add(_create_manufacturer(manufacturer))
 
     return manufacturers
+
+
+def get_all_with_fields(connection: sqlite3.Connection, *fields: str) -> list[dict[str, Any]]:
+    data = []
+    column_names = ', '.join(fields)
+
+    cursor = connection.cursor()
+    manufacturers_raw = cursor.execute(f'SELECT {column_names} FROM manufacturer').fetchall()
+    cursor.close()
+
+    for manufacturer in manufacturers_raw:
+        dictionary = dict()
+
+        for idx, field in enumerate(fields):
+            dictionary[field] = manufacturer[idx]
+
+        data.append(dictionary)
+
+    return data

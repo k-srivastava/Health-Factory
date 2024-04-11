@@ -2,7 +2,7 @@
 import sqlite3
 from dataclasses import dataclass
 from datetime import date, timedelta
-from typing import Optional
+from typing import Optional, Any
 
 
 @dataclass(frozen=True, slots=True)
@@ -123,3 +123,22 @@ def get_all(connection: sqlite3.Connection) -> set[Medicine]:
         medicines.add(_create_medicine(medicine))
 
     return medicines
+
+
+def get_all_with_fields(connection: sqlite3.Connection, *fields: str) -> list[dict[str, Any]]:
+    data = []
+    column_names = ', '.join(fields)
+
+    cursor = connection.cursor()
+    medicines_raw = cursor.execute(f'SELECT {column_names} FROM medicine').fetchall()
+    cursor.close()
+
+    for medicine in medicines_raw:
+        dictionary = dict()
+
+        for idx, field in enumerate(fields):
+            dictionary[field] = medicine[idx]
+
+        data.append(dictionary)
+
+    return data

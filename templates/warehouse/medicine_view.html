@@ -1,0 +1,30 @@
+{% extends "factory/base.html" %}
+
+{% block title %}Warehouse | Medicine ({{ medicine.id }}){% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/factory/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="card-data">
+        <h1>{{ medicine.name[:2] }}</h1>
+        <h2>{{ medicine.name }}</h2>
+        <h3>{{ medicine.id }}</h3>
+        <h4 onclick="redirectToPath('medicines', {{ medicine.id }}, 'manufacturers', {{ medicine.manufacturer_id }})">
+            {{ medicine.manufacturer_id }}
+        </h4>
+
+        <p>Cost: {{ medicine.cost_price }}</p>
+        <p>Sale: {{ medicine.sale_price }}</p>
+        <p>{{ "Potency: " + medicine.potency.__str__() if medicine.potency != None else "" }}</p>
+        <p>Quantity: {{ medicine.quantity_per_unit }}</p>
+        <p>Manufacturing: {{ medicine.manufacturing_date }}</p>
+        <p>Purchase: {{ medicine.purchase_date }}</p>
+        <p>Expiry: {{ medicine.expiry_date }}</p>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='scripts/redirection.js') }}" defer></script>
+{% endblock %}

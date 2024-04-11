@@ -1,0 +1,16 @@
+{% extends "warehouse/search.html" %}
+
+{% block title %}Warehouse | Medicines{% endblock %}
+
+{% block list_content %}
+    <ul id="valid-medicines" class="valid-list"></ul>
+{% endblock %}
+
+{% block variables %}
+    <script lang="js" defer>
+        const dataJSON = JSON.parse({{ medicines|tojson }});
+        const fields = ['id', 'name'];
+        const validListID = 'valid-medicines';
+        const dataType = 'medicines';
+    </script>
+{% endblock %}

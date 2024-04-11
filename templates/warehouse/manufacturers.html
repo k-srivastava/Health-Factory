@@ -1,0 +1,16 @@
+{% extends "warehouse/search.html" %}
+
+{% block title %}Warehouse | Manufacturers{% endblock %}
+
+{% block list_content %}
+    <ul id="valid-manufacturers" class="valid-list"></ul>
+{% endblock %}
+
+{% block variables %}
+    <script lang="js" defer>
+        const dataJSON = JSON.parse({{ manufacturers|tojson }});
+        const fields = ['id', 'name', 'phone_number'];
+        const validListID = 'valid-manufacturers';
+        const dataType = 'manufacturers';
+    </script>
+{% endblock %}

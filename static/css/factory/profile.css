@@ -1,4 +1,4 @@
-.employee-data {
+.card-data {
     position: relative;
     z-index: 1;
     top: 50%;
@@ -52,6 +52,7 @@
     font-size: 5em;
     right: 1.5vw;
     bottom: 0;
+    pointer-events: auto;
 }
 
 .content p {

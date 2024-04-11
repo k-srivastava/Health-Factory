@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="employee-data">
+    <div class="card-data">
         <h1>{{ employee.designation[:2] if employee.designation != None else "Em" }}</h1>
         <h2>{{ employee.full_name }}</h2>
         <h3>{{ employee.id }}</h3>

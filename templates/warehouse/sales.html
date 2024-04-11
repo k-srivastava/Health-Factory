@@ -1,0 +1,16 @@
+{% extends "warehouse/search.html" %}
+
+{% block title %}Warehouse | Sales{% endblock %}
+
+{% block list_content %}
+    <ul id="valid-sales" class="valid-list"></ul>
+{% endblock %}
+
+{% block variables %}
+    <script lang="js" defer>
+        const dataJSON = JSON.parse({{ sales|tojson }});
+        const fields = ['id', 'date_time'];
+        const validListID = 'valid-sales';
+        const dataType = 'sales';
+    </script>
+{% endblock %}

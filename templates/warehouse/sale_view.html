@@ -1,0 +1,18 @@
+{% extends "factory/base.html" %}
+
+{% block title %}Warehouse | Sale ({{ sale.id }}){% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/factory/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="card-data">
+        <h1>{{ sale.id }}</h1>
+        <h2>{{ sale.date_time.__str__().split()[0] }}</h2>
+        <h3>{{ sale.employee_id }}</h3>
+        <h4>{{ sale.customer_id }}</h4>
+
+        <p>Amount: {{ sale.amount }}</p>
+    </div>
+{% endblock %}
