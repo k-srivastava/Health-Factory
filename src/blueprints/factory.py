@@ -63,7 +63,7 @@ def profile_edit() -> flask.Response | str:
     if 'employee_id' not in flask.session:
         return flask.redirect(flask.url_for('factory.login'))
 
-    connection = sqlite3.connect(os.getenv('factory.login'))
+    connection = sqlite3.connect(os.getenv('DATABASE_PATH'))
     employee_data = employee.get_by_id(connection, flask.session.get('employee_id'))
     connection.close()
 
