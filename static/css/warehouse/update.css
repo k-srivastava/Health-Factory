@@ -1,0 +1,73 @@
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 3vw;
+    transform: translate(-50%, -50%);
+    border-radius: 1em;
+    background: #FFFFFF;
+}
+
+.center h1 {
+    font-size: 2em;
+    padding: 0.5em 0 0.5em 0;
+    text-align: center;
+    border-bottom: 1px solid var(--cerulean);
+}
+
+form { padding: 0 3em; }
+
+form .field,
+form .id-field {
+    position: relative;
+    margin: 1.5em 0;
+    border-bottom: 2px solid var(--cerulean);
+}
+
+form .field input,
+form select{
+    font-size: 1em;
+    width: 100%;
+    height: 1.5em;
+    padding: 0 0.5em;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+form .field label {
+    position: absolute;
+    top: 50%;
+    left: 0.5em;
+    transition: 0.5s;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--royal-blue);
+}
+
+form .field input:focus ~ label,
+form .field input:valid ~ label,
+form select:focus ~ label,
+form select:valid ~ label{
+    top: -0.5em;
+    color: var(--royal-blue);
+}
+
+form input[type=submit] {
+    font-size: 1em;
+    font-weight: 500;
+    width: 100%;
+    height: 2.5em;
+    cursor: pointer;
+    color: #FFFFFF;
+    border: 1px solid;
+    border-radius: 0.75em;
+    outline: none;
+    background: var(--cerulean);
+}
+
+.submission-message {
+    font-size: 0.75em;
+    margin: 2em 0;
+    text-align: center;
+}
