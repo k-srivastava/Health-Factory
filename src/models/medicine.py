@@ -142,3 +142,31 @@ def get_all_with_fields(connection: sqlite3.Connection, *fields: str) -> list[di
         data.append(dictionary)
 
     return data
+
+
+def insert(connection: sqlite3.Connection, medicine: Medicine):
+    cursor = connection.cursor()
+    cursor.execute(
+        'INSERT INTO medicine VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        (
+            medicine.id, medicine.name, medicine.manufacturer_id, medicine.cost_price, medicine.sale_price,
+            medicine.potency, medicine.quantity_per_unit, medicine.manufacturing_date, medicine.purchase_date,
+            medicine.expiry_date
+        )
+    )
+    cursor.close()
+
+
+def update(connection: sqlite3.Connection, medicine: Medicine):
+    cursor = connection.cursor()
+    cursor.execute(
+        '''UPDATE medicine
+        SET name = ?, manufacturer_id = ?, cost_price = ?, sale_price = ?, potency = ?, quantity_per_unit = ?, 
+        manufacturing_date = ?, purchase_date = ?, expiry_date = ? WHERE id = ?''',
+        (
+            medicine.name, medicine.manufacturer_id, medicine.cost_price, medicine.sale_price, medicine.potency,
+            medicine.quantity_per_unit, medicine.manufacturing_date, medicine.purchase_date, medicine.expiry_date,
+            medicine.id
+        )
+    )
+    cursor.close()

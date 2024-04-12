@@ -1,0 +1,58 @@
+{% extends "warehouse/update.html" %}
+
+{% block title %}Warehouse | Salt (Update){% endblock %}
+
+{% block id_field %}
+    <div class="id-field">
+        <label for="model-id">{{ model_name|title }}</label>
+        <select name="model-id" id="model-id" onchange="updateSaltFields()">
+            <option name="model-name-new" value="New Model">Create New...</option>
+            {% for model in models %}
+                <option name="model-name" value="{{ model.id }}">{{ model.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+{% endblock %}
+
+{% block fields %}
+    <div class="field readonly">
+        <input type="number" id="salt-id" name="salt-id" readonly>
+        <label for="salt-id">ID</label>
+    </div>
+
+    <div class="field">
+        <input type="text" id="salt-name" name="salt-name">
+        <label for="salt-name">Name</label>
+    </div>
+{% endblock %}
+
+{% block script_variables %}
+    <script lang="js" defer>
+        const saltData = JSON.parse({{ model_json|tojson }});
+
+        const selectID = document.getElementById('model-id');
+
+        const fieldID = document.getElementById('salt-id');
+        const fieldName = document.getElementById('salt-name');
+
+        const saltIDs = saltData.map(salt => salt.id.toString());
+
+        function updateSaltFields() {
+            if (saltIDs.indexOf(selectID.value) === -1) {
+                fieldID.value = (Math.max(...saltIDs.map(Number)) + 1).toString();
+                fieldName.value = '';
+
+                return;
+            }
+
+            for (let salt of saltData) {
+                if (salt.id.toString() === selectID.value) {
+                    fieldID.value = salt.id;
+                    fieldName.value = salt.name;
+
+                    return;
+                }
+            }
+        }
+    </script>
+{% endblock %}

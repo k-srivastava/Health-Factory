@@ -138,3 +138,21 @@ def get_all_with_fields(connection: sqlite3.Connection, *fields: str) -> list[di
         data.append(dictionary)
 
     return data
+
+
+def insert(connection: sqlite3.Connection, sale: Sale):
+    cursor = connection.cursor()
+    cursor.execute(
+        'INSERT INTO sale VALUES (?, ?, ?, ?, ?)',
+        (sale.id, sale.date_time, sale.employee_id, sale.customer_id, sale.amount)
+    )
+    cursor.close()
+
+
+def update(connection: sqlite3.Connection, sale: Sale):
+    cursor = connection.cursor()
+    cursor.execute(
+        'UPDATE sale SET date_time = ?, employee_id = ?, customer_id = ?, amount = ? WHERE id = ?',
+        (sale.date_time, sale.employee_id, sale.customer_id, sale.amount, sale.id)
+    )
+    cursor.close()

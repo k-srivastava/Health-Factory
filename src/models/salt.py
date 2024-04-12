@@ -102,3 +102,15 @@ def get_all_with_fields(connection: sqlite3.Connection, *fields: str) -> list[di
         data.append(dictionary)
 
     return data
+
+
+def insert(connection: sqlite3.Connection, salt: Salt):
+    cursor = connection.cursor()
+    cursor.execute('INSERT INTO salt VALUES (?, ?)', (salt.id, salt.name))
+    cursor.close()
+
+
+def update(connection: sqlite3.Connection, salt: Salt):
+    cursor = connection.cursor()
+    cursor.execute('UPDATE salt SET name = ? WHERE id = ?', (salt.name, salt.id))
+    cursor.close()

@@ -1,0 +1,90 @@
+{% extends "warehouse/update.html" %}
+
+{% block title %}Warehouse | Sale (Update){% endblock %}
+
+{% block id_field %}
+    <div class="id-field">
+        <label for="model-id">{{ model_name|title }}</label>
+        <select name="model-id" id="model-id" onchange="updateSaleFields()">
+            <option name="model-id-new" value="New Model">Create New...</option>
+            {% for model in models %}
+                <option name="model-id" value="{{ model.id }}">{{ model.id }}</option>
+            {% endfor %}
+        </select>
+    </div>
+{% endblock %}
+
+{% block fields %}
+    <div class="field readonly">
+        <input type="number" id="sale-id" name="sale-id" readonly>
+        <label for="sale-id">ID</label>
+    </div>
+
+    <div class="field">
+        <input type="datetime-local" id="sale-date-time" name="sale-date-time">
+        <label for="sale-date-time">Date Time</label>
+    </div>
+
+    <div class="field">
+        <select id="sale-employee-id" name="sale-employee-id">
+            {% for employee_id in employee_ids %}
+                <option name="employee-id" value="{{ employee_id }}">{{ employee_id }}</option>
+            {% endfor %}
+        </select>
+        <label for="sale-employee-id">Employee ID</label>
+    </div>
+
+    <div class="field">
+        <select id="sale-customer-id" name="sale-customer-id">
+            {% for customer_id in customer_ids %}
+                <option name="customer-id" value="{{ customer_id }}">{{ customer_id }}</option>
+            {% endfor %}
+        </select>
+        <label for="sale-customer-id">Customer ID</label>
+    </div>
+
+    <div class="field">
+        <input type="number" id="sale-amount" name="sale-amount">
+        <label for="sale-amount">Amount</label>
+    </div>
+{% endblock %}
+
+{% block script_variables %}
+    <script lang="js" defer>
+        const saleData = JSON.parse({{ model_json|tojson }});
+
+        const selectID = document.getElementById('model-id');
+
+        const fieldID = document.getElementById('sale-id');
+        const fieldDateTime = document.getElementById('sale-date-time');
+        const selectEmployeeID = document.getElementById('sale-employee-id');
+        const selectCustomerID = document.getElementById('sale-customer-id');
+        const fieldAmount = document.getElementById('sale-amount');
+
+        const saleIDs = saleData.map(sale => sale.id.toString());
+
+        function updateSaleFields() {
+            if (saleIDs.indexOf(selectID.value) === -1) {
+                fieldID.value = (Math.max(...saleIDs.map(Number)) + 1).toString();
+                fieldDateTime.value = '';
+                selectEmployeeID.value = 0;
+                selectCustomerID.value = 0;
+                fieldAmount.value = 0;
+
+                return;
+            }
+
+            for (let sale of saleData) {
+                if (sale.id.toString() === selectID.value) {
+                    fieldID.value = sale.id;
+                    fieldDateTime.value = sale.date_time;
+                    selectEmployeeID.value = sale.employee_id;
+                    selectCustomerID.value = sale.customer_id;
+                    fieldAmount.value = sale.amount;
+
+                    return;
+                }
+            }
+        }
+    </script>
+{% endblock %}

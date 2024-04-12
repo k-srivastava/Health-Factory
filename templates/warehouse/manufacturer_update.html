@@ -1,0 +1,78 @@
+{% extends "warehouse/update.html" %}
+
+{% block title %}Warehouse | Manufacturer (Update){% endblock %}
+
+{% block id_field %}
+    <div class="id-field">
+        <label for="model-id">{{ model_name|title }}</label>
+        <select name="model-id" id="model-id" onchange="updateManufacturerFields()">
+            <option name="model-name-new" value="New Model">Create New...</option>
+            {% for model in models %}
+                <option name="model-name" value="{{ model.id }}">{{ model.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+{% endblock %}
+
+{% block fields %}
+    <div class="field readonly">
+        <input type="number" id="manufacturer-id" name="manufacturer-id" readonly>
+        <label for="manufacturer-id">ID</label>
+    </div>
+
+    <div class="field">
+        <input type="text" id="manufacturer-name" name="manufacturer-name">
+        <label for="manufacturer-name">Name</label>
+    </div>
+
+    <div class="field">
+        <input type="text" id="manufacturer-phone-number" name="manufacturer-phone-number">
+        <label for="manufacturer-phone-number">Phone Number</label>
+    </div>
+
+    <div class="field">
+        <input type="text" id="manufacturer-address" name="manufacturer-address">
+        <label for="manufacturer-address">Address</label>
+    </div>
+{% endblock %}
+
+{% block secondary_scripts %}
+    <script lang="js" defer>
+    </script>
+{% endblock %}
+
+{% block script_variables %}
+    <script lang="js" defer>
+        const manufacturerData = JSON.parse({{ model_json|tojson }});
+
+        const selectID = document.getElementById('model-id');
+        const fieldID = document.getElementById('manufacturer-id');
+        const fieldName = document.getElementById('manufacturer-name');
+        const fieldPhoneNumber = document.getElementById('manufacturer-phone-number');
+        const fieldAddress = document.getElementById('manufacturer-address');
+
+        const manufacturerIDs = manufacturerData.map(manufacturer => manufacturer.id.toString());
+
+        function updateManufacturerFields() {
+            if (manufacturerIDs.indexOf(selectID.value) === -1) {
+                fieldID.value = (Math.max(...manufacturerIDs.map(Number)) + 1).toString();
+                fieldName.value = '';
+                fieldPhoneNumber.value = '';
+                fieldAddress.value = ''
+
+                return;
+            }
+
+            for (let manufacturer of manufacturerData) {
+                if (manufacturer.id.toString() === selectID.value) {
+                    fieldID.value = manufacturer.id;
+                    fieldName.value = manufacturer.name;
+                    fieldPhoneNumber.value = manufacturer.phone_number;
+                    fieldAddress.value = manufacturer.address;
+
+                    return;
+                }
+            }
+        }
+    </script>
+{% endblock %}

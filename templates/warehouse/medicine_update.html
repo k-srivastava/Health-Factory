@@ -1,0 +1,123 @@
+{% extends "warehouse/update.html" %}
+
+{% block title %}Warehouse | Medicine (Update){% endblock %}
+
+{% block id_field %}
+    <div class="id-field">
+        <label for="model-id">{{ model_name|title }}</label>
+        <select name="model-id" id="model-id" onchange="updateMedicineFields()">
+            <option name="model-name-new" value="New Model">Create New...</option>
+            {% for model in models %}
+                <option name="model-name" value="{{ model.id }}">{{ model.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+{% endblock %}
+
+{% block fields %}
+    <div class="field readonly">
+        <input type="number" id="medicine-id" name="medicine-id" readonly>
+        <label for="medicine-id">ID</label>
+    </div>
+
+    <div class="field">
+        <input type="text" id="medicine-name" name="medicine-name">
+        <label for="medicine-name">Name</label>
+    </div>
+
+    <div class="field">
+        <select id="medicine-manufacturer-id" name="medicine-manufacturer-id">
+            {% for manufacturer_id in manufacturer_ids %}
+                <option name="manufacturer-id" value="{{ manufacturer_id }}">{{ manufacturer_id }}</option>
+            {% endfor %}
+        </select>
+        <label for="medicine-manufacturer-id">Manufacturer ID</label>
+    </div>
+
+    <div class="field">
+        <input type="number" id="medicine-cost-price" name="medicine-cost-price">
+        <label for="medicine-cost-price">Cost Price</label>
+    </div>
+
+    <div class="field">
+        <input type="number" id="medicine-sale-price" name="medicine-sale-price">
+        <label for="medicine-sale-price">Sale Price</label>
+    </div>
+
+    <div class="field">
+        <input type="number" id="medicine-potency" name="medicine-potency">
+        <label for="medicine-potency">Potency</label>
+    </div>
+
+    <div class="field">
+        <input type="number" id="medicine-quantity-per-unit" name="medicine-quantity-per-unit">
+        <label for="medicine-quantity-per-unit">Quantity Per Unit</label>
+    </div>
+
+    <div class="field">
+        <input type="date" id="medicine-manufacturing-date" name="medicine-manufacturing-date">
+        <label for="medicine-manufacturing-date">Manufacturing Date</label>
+    </div>
+
+    <div class="field">
+        <input type="date" id="medicine-purchase-date" name="medicine-purchase-date">
+        <label for="medicine-purchase-date">Purchase Date</label>
+    </div>
+
+    <div class="field">
+        <input type="date" id="medicine-expiry-date" name="medicine-expiry-date">
+        <label for="medicine-expiry-date">Expiry Date</label>
+    </div>
+{% endblock %}
+
+{% block script_variables %}
+    <script lang="js" defer>
+        const medicineData = JSON.parse({{ model_json|tojson }});
+
+        const selectID = document.getElementById('model-id');
+
+        const fieldID = document.getElementById('medicine-id');
+        const fieldName = document.getElementById('medicine-name');
+        const selectManufacturerID = document.getElementById('medicine-manufacturer-id');
+        const fieldCostPrice = document.getElementById('medicine-cost-price');
+        const fieldSalePrice = document.getElementById('medicine-sale-price');
+        const fieldPotency = document.getElementById('medicine-potency');
+        const fieldManufacturingDate = document.getElementById('medicine-manufacturing-date');
+        const fieldPurchaseDate = document.getElementById('medicine-purchase-date');
+        const fieldExpiryDate = document.getElementById('medicine-expiry-date');
+
+        const medicineIDs = medicineData.map(medicine => medicine.id.toString());
+
+        function updateMedicineFields() {
+            if (medicineIDs.indexOf(selectID.value) === -1) {
+                fieldID.value = (Math.max(...medicineIDs.map(Number)) + 1).toString();
+                fieldName.value = '';
+                selectManufacturerID.value = 0;
+                fieldCostPrice.value = 0;
+                fieldSalePrice.value = 0;
+                fieldPotency.value = 0;
+                fieldManufacturingDate.value = '';
+                fieldPurchaseDate.value = '';
+                fieldExpiryDate.value = '';
+
+                return;
+            }
+
+            for (let medicine of medicineData) {
+                if (medicine.id.toString() === selectID.value) {
+                    fieldID.value = medicine.id;
+                    fieldName.value = medicine.name;
+                    selectManufacturerID.value = medicine.manufacturer_id;
+                    fieldCostPrice.value = medicine.cost_price;
+                    fieldSalePrice.value = medicine.sale_price;
+                    fieldPotency.value = medicine.potency;
+                    fieldManufacturingDate.value = medicine.manufacturing_date;
+                    fieldPurchaseDate.value = medicine.purchase_date;
+                    fieldExpiryDate.value = medicine.expiry_date;
+
+                    return;
+                }
+            }
+        }
+    </script>
+{% endblock %}
