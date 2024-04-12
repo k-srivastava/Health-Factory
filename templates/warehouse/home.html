@@ -2,6 +2,17 @@
 
 {% block title %}Warehouse | Home{% endblock %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/warehouse/home.css') }}">
+{% endblock %}
+
 {% block content %}
-    <h1>Warehouse Home</h1>
+    <h1 class="warehouse-title">Warehouse Home</h1>
+
+    <ul class="model-list">
+        <li><a href="/warehouse/manufacturers">Manufacturers</a></li>
+        <li><a href="/warehouse/medicines">Medicines</a></li>
+        <li><a href="/warehouse/sales">Sales</a></li>
+        <li><a href="/warehouse/salts">Salts</a></li>
+    </ul>
 {% endblock %}
