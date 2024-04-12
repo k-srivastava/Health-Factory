@@ -33,12 +33,15 @@
 
 .valid {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
 .valid .valid-list {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     width: 45vw;
     height: 60vh;
 }
@@ -50,11 +53,11 @@
 }
 
 .valid .valid-list li {
-    text-align: center;
     line-height: 3vh;
     position: relative;
     width: 30vw;
     list-style: none;
+    text-align: center;
     color: var(--text-color);
     border-top: 1px solid rgba(255, 255, 255, 0.5);
     border-left: 1px solid rgba(255, 255, 255, 0.5);
